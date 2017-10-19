@@ -5,22 +5,22 @@ module Google
         @document = doc
       end
       def title
-        @title ||= @document.css("#col-title a:first").text
+        @title ||= @document.css(".gsc_a_at").text
       end
       def authors
-        @authors ||= @document.css("#col-title span:first").text
+        @authors ||= @document.css(".gs_gray").first.text
       end
       def publisher
-        @publisher ||= @document.css("#col-title span:last").text
+        @publisher ||= @document.css(".gs_gray").last.text
       end
       def citations
-        @citations ||= @document.css("#col-citedby a:first").text.to_i
+        @citations ||= @document.css(".gsc_a_ac").text.to_i
       end
       def year
-        @year ||= @document.css("#col-year").text.to_i
+        @year ||= @document.css(".gsc_a_hc").text.to_i
       end
       def full_article_url
-        @full_article_url ||= "#{Google::Scholar.google_url}#{@document.css("#col-title a:first").attr("href").text}"
+        @full_article_url ||= "#{Google::Scholar.google_url}#{@document.css(".gsc_a_at").attr("data-href").text}"
       end
     end
   end

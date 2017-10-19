@@ -9,12 +9,12 @@ module Google
         validity
       end
       def authors_count
-        self.css('.g-unit').length
+        self.css('.gsc_1usr').length
       end
       def authors(force=false)
         return @authors if @authors && !force
         @authors = []
-        self.css('.g-unit').each {|author| @authors << Google::Scholar::Author.new(author)}
+        self.css('.gsc_1usr').each {|author| @authors << Google::Scholar::Author.new(author)}
         @authors
       end
       def last_author

@@ -6,7 +6,7 @@ module Google
       def articles(force=false)
         return @citations if @citations && !force
         @citations = []
-        self.css(".cit-table tr.item").each {|row| @citations << Google::Scholar::ArticleSummary.new(row)}
+        self.css(".gsc_a_tr").each {|row| @citations << Google::Scholar::ArticleSummary.new(row)}
         return @citations
       end
     end

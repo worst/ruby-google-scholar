@@ -2,17 +2,18 @@ require 'nokogiri'
 module Google
   module Scholar
     class Author
+      #attr_accessor :summary_doc
       def initialize(document)
         @summary_doc = document
       end
       def name
-        @name ||= @summary_doc.css("td:last a:first").text.strip.gsub('\n','')
+        @name ||= @summary_doc.css(".gsc_oai_name").text.strip
       end
       def citation_count
-        @citation_count ||= @summary_doc.css("td:last").children.reject{|x| !x.text?}.last.text.split(" ").last.to_i
+        @citation_count ||= @summary_doc.css(".gsc_oai_cby").children.reject{|x| !x.text?}.last.text.split(" ").last.to_i
       end
       def author_url
-        @author_url ||= "#{Google::Scholar.google_url}#{@summary_doc.css("td:last a").first.attr("href")}&pagesize=100"
+        @author_url ||= "#{Google::Scholar.google_url}#{@summary_doc.css('.gsc_oai_name').children.attr('href').value}&pagesize=100"
       end
       def full_profile
         @full_profile ||= Google::Scholar::Scraper.new(author_url).documents.first
